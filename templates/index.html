@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniSOC Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #111827;
+            color: #f9fafb;
+        }
+
+        header {
+            padding: 24px 40px;
+            background: #1f2937;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .dashboard {
+            padding: 30px 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #1f2937;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1f2937;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+
+        th {
+            background: #374151;
+        }
+
+        .CRITICAL {
+            color: #f87171;
+            font-weight: bold;
+        }
+
+        .HIGH {
+            color: #fb923c;
+            font-weight: bold;
+        }
+
+        .MEDIUM {
+            color: #facc15;
+            font-weight: bold;
+        }
+
+        .LOW {
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .OPEN {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>MiniSOC</h1>
+    <p>Security Operations Dashboard</p>
+</header>
+
+<div class="dashboard">
+
+    <div class="cards">
+        <div class="card">
+            <div>Total Alerts</div>
+            <div class="number">{{ alerts|length }}</div>
+        </div>
+
+        <div class="card">
+            <div>Critical</div>
+            <div class="number">
+                {{ alerts|selectattr("severity", "equalto", "CRITICAL")|list|length }}
+            </div>
+        </div>
+
+        <div class="card">
+            <div>High</div>
+            <div class="number">
+                {{ alerts|selectattr("severity", "equalto", "HIGH")|list|length }}
+            </div>
+        </div>
+
+        <div class="card">
+            <div>Open</div>
+            <div class="number">
+                {{ alerts|selectattr("status", "equalto", "OPEN")|list|length }}
+            </div>
+        </div>
+    </div>
+
+    <h2>Security Alerts</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Severity</th>
+                <th>Source IP</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for alert in alerts %}
+            <tr>
+                <td>{{ alert.id }}</td>
+                <td>{{ alert.alert_type }}</td>
+                <td class="{{ alert.severity }}">{{ alert.severity }}</td>
+                <td>{{ alert.source_ip }}</td>
+                <td>{{ alert.description }}</td>
+                <td class="{{ alert.status }}">{{ alert.status }}</td>
+                <td>{{ alert.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

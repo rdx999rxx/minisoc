@@ -1,0 +1,11 @@
+Sep 29 01:00:01 server sshd[1001]: Failed password for admin from 10.10.10.25 port 41231 ssh2
+Sep 29 01:00:04 server sshd[1002]: Failed password for admin from 10.10.10.25 port 41232 ssh2
+Sep 29 01:00:08 server sshd[1003]: Failed password for root from 10.10.10.25 port 41233 ssh2
+Sep 29 01:00:12 server sshd[1004]: Failed password for root from 10.10.10.25 port 41234 ssh2
+Sep 29 01:00:16 server sshd[1005]: Failed password for root from 10.10.10.25 port 41235 ssh2
+Sep 29 01:00:20 server sshd[1006]: Failed password for admin from 10.10.10.25 port 41236 ssh2
+
+10.10.10.50 - - [29/Sep/2026:01:02:10 +0530] "GET /index.html HTTP/1.1" 200 1200
+10.10.10.51 - - [29/Sep/2026:01:02:15 +0530] "GET /../../etc/passwd HTTP/1.1" 400 421
+10.10.10.52 - - [29/Sep/2026:01:02:20 +0530] "GET /search?q=union%20select%20username,password%20from%20users HTTP/1.1" 403 512
+10.10.10.53 - - [29/Sep/2026:01:02:25 +0530] "GET /page?x=<script>alert(1)</script> HTTP/1.1" 403 512
